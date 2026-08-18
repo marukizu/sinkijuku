@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>サイトQRコード ｜ 信稀塾</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--navy:#12233d;--navy-2:#1d3a63;--orange:#f28c28;--ink:#22303f;--line:#dfe5ee;--bg:#f6f8fb}
+  body{font-family:"Noto Sans JP",sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  a{color:var(--navy-2)}
+  a:hover{color:var(--orange)}
+  .wrap{max-width:920px;margin:0 auto;padding:0 24px}
+  header{background:var(--navy);padding:18px 0}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  header img{height:38px;display:block}
+  header a.back{color:#cdd7e6;font-size:.9rem;text-decoration:none}
+  header a.back:hover{color:var(--orange)}
+  main{padding:56px 0 72px}
+  .kicker{font-size:.8rem;letter-spacing:.16em;font-weight:700;color:var(--orange);margin-bottom:10px}
+  h1{font-size:1.9rem;font-weight:900;color:var(--navy);line-height:1.35;margin-bottom:12px}
+  .lead{font-size:1rem;line-height:1.85;max-width:56ch;color:#465767}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-top:40px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:28px;display:flex;flex-direction:column;gap:16px;align-items:center;text-align:center}
+  .card h2{font-size:1.1rem;font-weight:800;color:var(--navy)}
+  .card p{font-size:.9rem;line-height:1.75;color:#5c6b7a}
+  .qr{width:236px;height:236px;display:grid;place-items:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px}
+  .qr canvas,.qr img{width:100%!important;height:100%!important;display:block}
+  .url{font-size:.82rem;word-break:break-all;color:#5c6b7a;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--orange);color:#fff;font-weight:700;font-size:.92rem;padding:12px 22px;border-radius:999px;text-decoration:none;border:none;cursor:pointer;font-family:inherit}
+  .btn:hover{background:#d9761a;color:#fff}
+  .note{margin-top:36px;font-size:.85rem;color:#5c6b7a;line-height:1.8}
+  footer{border-top:1px solid var(--line);padding:24px 0;font-size:.8rem;color:#7b8896}
+  @media print{
+    header,footer,.btn,.note,.lead{display:none}
+    body{background:#fff}
+    main{padding:0}
+    .card{border:none}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a href="index.html"><img src="logo.jpg" alt="信稀塾"></a>
+    <a class="back" href="index.html">← サイトトップへ戻る</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="kicker">QR CODE</p>
+  <h1>サイトQRコード</h1>
+  <p class="lead">ビラやポスターに使えるQRコードです。読み取るとスマートフォンで信稀塾のサイトが開きます。用途に合わせて2種類をご用意しました。</p>
+
+  <div class="grid">
+    <div class="card">
+      <div class="qr" id="qr-top"></div>
+      <h2>サイトトップ</h2>
+      <p>ページの先頭から表示します。名刺・ポスターなど一般用。</p>
+      <p class="url">https://marukizu.github.io/sinkijuku/</p>
+      <button class="btn" data-dl="qr-top" data-name="qr-top">画像を保存</button>
+    </div>
+    <div class="card">
+      <div class="qr" id="qr-challenge"></div>
+      <h2>ビラの答え合わせ</h2>
+      <p>ビラの問題の解説へ直接飛びます。配布ビラ用。</p>
+      <p class="url">https://marukizu.github.io/sinkijuku/#challenge</p>
+      <button class="btn" data-dl="qr-challenge" data-name="qr-challenge">画像を保存</button>
+    </div>
+  </div>
+
+  <p class="note">印刷して使う場合は、QRコードの一辺を2cm以上にしてください。小さすぎると読み取れないことがあります。</p>
+</main>
+
+<footer class="wrap">© 2026 信稀塾（Sinki Juku）</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+<script>
+(function(){
+  var targets = [
+    {id:'qr-top', url:'https://marukizu.github.io/sinkijuku/'},
+    {id:'qr-challenge', url:'https://marukizu.github.io/sinkijuku/#challenge'}
+  ];
+  function draw(el, text){
+    var qr = qrcode(0, 'M');
+    qr.addData(text);
+    qr.make();
+    var n = qr.getModuleCount(), quiet = 4, size = 1024;
+    var cell = Math.floor(size / (n + quiet * 2));
+    var dim = cell * (n + quiet * 2);
+    var c = document.createElement('canvas');
+    c.width = c.height = dim;
+    var ctx = c.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, dim, dim);
+    ctx.fillStyle = '#12233d';
+    for (var r = 0; r < n; r++) {
+      for (var col = 0; col < n; col++) {
+        if (qr.isDark(r, col)) {
+          ctx.fillRect((col + quiet) * cell, (r + quiet) * cell, cell, cell);
+        }
+      }
+    }
+    el.appendChild(c);
+  }
+  targets.forEach(function(t){
+    var el = document.getElementById(t.id);
+    if (el) draw(el, t.url);
+  });
+  document.querySelectorAll('[data-dl]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var canvas = document.querySelector('#' + btn.dataset.dl + ' canvas');
+      if (!canvas) return;
+      var a = document.createElement('a');
+      a.href = canvas.toDataURL('image/png');
+      a.download = btn.dataset.name + '.png';
+      a.click();
+    });
+  });
+})();
+</script>
+</body>
+</html>

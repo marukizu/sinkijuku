@@ -54,7 +54,7 @@
 <main class="wrap">
   <p class="kicker">QR CODE</p>
   <h1>サイトQRコード</h1>
-  <p class="lead">ビラやポスターに使えるQRコードです。読み取るとスマートフォンで信稀塾のサイトが開きます。用途に合わせて2種類をご用意しました。</p>
+  <p class="lead">ビラやポスターに使えるQRコードです。読み取るとスマートフォンで信稀塾のサイトが開きます。</p>
 
   <div class="grid">
     <div class="card">
@@ -63,13 +63,6 @@
       <p>ページの先頭から表示します。名刺・ポスターなど一般用。</p>
       <p class="url">https://marukizu.github.io/sinkijuku/</p>
       <button class="btn" data-dl="qr-top" data-name="qr-top">画像を保存</button>
-    </div>
-    <div class="card">
-      <div class="qr" id="qr-challenge"></div>
-      <h2>ビラの答え合わせ</h2>
-      <p>ビラの問題の解説へ直接飛びます。配布ビラ用。</p>
-      <p class="url">https://marukizu.github.io/sinkijuku/#challenge</p>
-      <button class="btn" data-dl="qr-challenge" data-name="qr-challenge">画像を保存</button>
     </div>
   </div>
 
@@ -82,8 +75,7 @@
 <script>
 (function(){
   var targets = [
-    {id:'qr-top', url:'https://marukizu.github.io/sinkijuku/'},
-    {id:'qr-challenge', url:'https://marukizu.github.io/sinkijuku/#challenge'}
+    {id:'qr-top', url:'https://marukizu.github.io/sinkijuku/'}
   ];
   function draw(el, text){
     var qr = qrcode(0, 'M');
